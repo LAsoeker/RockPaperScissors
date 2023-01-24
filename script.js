@@ -59,7 +59,6 @@ function resetGame(){
   choiceAIOutput.textContent = "";
   choicePlayerOutput.textContent = "";
   winnerOutput.textContent = "Play Rock, Paper, Scissors!";
-
 }
 
 const buttons = document.querySelectorAll('.btn')
