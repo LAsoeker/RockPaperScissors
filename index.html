@@ -5,10 +5,34 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <title>Document</title>
 </head>
 <body>
-  
+  <div class="game-wrapper">
+    <div class="output-winner">Play Rock, Paper, Scissors!</div>
+    <div class="score-wrapper">
+      <div class="score-player">
+        Player<div id="score-player"></div>  
+      </div>
+      <div class="score-AI">
+        AI<div id="score-AI"></div>  
+      </div>
+    </div>
+    <div class="buttons-wrapper">
+      <button id="btn-rock" data-choice="rock" class="btn">Rock</button>
+      <button id="btn-paper" data-choice="paper" class="btn">Paper</button>
+      <button id="btn-scissors" data-choice="scissors" class="btn">Scissors</button>
+    </div>
+    <div class="output-wrapper">
+      <div class="output-player">
+        Player<div id="output-player"></div>  
+      </div>
+      <div class="output-result"></div>
+      <div class="output-AI">
+        AI<div id="output-AI"></div>  
+      </div>
+    </div>
+  </div>
 </body>
 </html>

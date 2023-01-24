@@ -1,59 +1,70 @@
+let playerScore = 0
+let AIScore = 0
+
+const resultOutput = document.querySelector('.output-result');
+const choicePlayerOutput = document.querySelector('#output-player');
+const choiceAIOutput = document.querySelector('#output-AI');
+const playerScoreOutput = document.querySelector('#score-player');
+const AIScoreOutput = document.querySelector('#score-AI');
+const winnerOutput = document.querySelector('.output-winner')
+
+console.log(playerScoreOutput)
+
+playerScoreOutput.textContent = playerScore;
+AIScoreOutput.textContent = AIScore;
+
 function getAIChoice() {
   const choices = ["rock", "paper", "scissors"];
-  const randomIndex = Math.floor(Math.random() * 3);
-  return choices[randomIndex];
-}
-
-function getPlayerSelection() {
-  const choice = prompt("Rock, paper or scissors? Let's play!")
-  return choice.toLowerCase();
+  const AIChoice = choices[Math.floor(Math.random() * 3)];
+  choiceAIOutput.textContent = AIChoice;
+  return AIChoice;
 }
 
 function playRound(playerSelection, AIChoice){
-  console.log(`Player picked ${playerSelection} and AI picked ${AIChoice}`)
-  if(playerSelection == "rock"){ 
-    if(AIChoice == "scissors") return true
-    if(AIChoice == "paper") return false
-    if(AIChoice == "rock") return "draw"
-  }
-  if(playerSelection == "scissors"){
-    if(AIChoice == "scissors") return "draw"
-    if(AIChoice == "paper")  return true
-    if(AIChoice == "rock") return false
-  }
-  if(playerSelection == "paper"){
-    if(AIChoice == "scissors") return false
-    if(AIChoice == "paper") return "draw"
-    if(AIChoice == "rock") return true
+  if(playerSelection === AIChoice) return "draw";
+  else if (playerSelection === 'rock' && AIChoice === 'scissors' || playerSelection === 'scissors' && AIChoice === 'paper' || playerSelection === 'paper' && AIChoice === 'rock') return true;
+  else return false;
+}
+
+function checkGameWinner(playerScore, AIScore){
+  if(playerScore === 5 || AIScore === 5){
+    playerScore > AIScore ? winnerOutput.textContent = "Yeah Player wins!" : winnerOutput.textContent = "AI wins!"
+    resetGame();
   }
   return
 }
 
-function playGame(){
-  let playerScore = 0
-  let AIScore = 0
-  let result
-  for(let i = 1; i<=5; i++){
-    console.log(`Round ${i}! Let's go!`)
-    result = playRound(getPlayerSelection(), getAIChoice())
-    if (result == "draw"){
-      console.log("DRAW! Play again!")
-    }else if(result){
-      playerScore++
-      console.log("Round goes to Player!")
-    }else{
-      AIScore++
-      console.log("Round goes to AI!")
-    }
-    console.log(`Player: ${playerScore}`)
-    console.log(`AI: ${AIScore}`)
-  }
-  if(playerScore==AIScore){
-    console.log("DRAW! No one wins the game")
+function playGame(result){
+  if (result == "draw"){
+    resultOutput.textContent = "DRAW! Play again!";
+  }else if(result){
+    playerScore++
+    playerScoreOutput.textContent = playerScore;
+    resultOutput.textContent = "Round goes to Player!";
   }else{
-    playerScore > AIScore ? console.log("Yeah Player wins!") : console.log("AI wins!")
+    AIScore++
+    AIScoreOutput.textContent = AIScore;
+    resultOutput.textContent = "Round goes to AI!";
   }
+  checkGameWinner(playerScore, AIScore)
   return
 }
 
-playGame();
+function resetGame(){
+  playerScore = 0;
+  AIScore = 0;
+  playerScoreOutput.textContent = playerScore;
+  AIScoreOutput.textContent = AIScore;
+  resultOutput.textContent = "";
+  choiceAIOutput.textContent = "";
+  choicePlayerOutput.textContent = "";
+  winnerOutput.textContent = "Play Rock, Paper, Scissors!";
+
+}
+
+const buttons = document.querySelectorAll('.btn')
+
+buttons.forEach(btn => btn.addEventListener('click', function(e) {
+  choicePlayerOutput.textContent = e.target.dataset.choice;
+  playGame(playRound(e.target.dataset.choice , getAIChoice()));
+}));
